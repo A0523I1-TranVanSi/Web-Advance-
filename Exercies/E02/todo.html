@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            outline: none;
+            font-size: 16px;
+        }
+        input[type="text"]:focus {
+            border-bottom: 2px solid #007bff;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-text {
+            flex-grow: 1;
+            font-size: 18px;
+        }
+        .task-actions button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>TODO LIST</h1>
+    <input type="text" id="task-input" placeholder="Thêm nhiệm vụ">
+    <button onclick="addTask()">THÊM</button>
+    <ul id="task-list"></ul>
+
+    <script>
+        function addTask() {
+            const taskText = document.getElementById('task-input').value;
+            if (taskText.trim() !== '') {
+                const taskList = document.getElementById('task-list');
+                const taskItem = document.createElement('li');
+                taskItem.classList.add('task');
+
+                const taskTextDiv = document.createElement('div');
+                taskTextDiv.textContent = taskText;
+
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Chỉnh sửa';
+                editButton.onclick = function () {
+                    editTask(taskItem, taskTextDiv, editButton);
+                };
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Xóa';
+                deleteButton.onclick = function () {
+                    deleteTask(taskItem);
+                };
+
+                taskItem.appendChild(taskTextDiv);
+                taskItem.appendChild(editButton);
+                taskItem.appendChild(deleteButton);
+
+                taskList.appendChild(taskItem);
+                document.getElementById('task-input').value = '';
+            }
+        }
+
+        function editTask(taskItem, taskTextDiv, editButton) {
+            const editText = prompt('Chỉnh sửa nhiệm vụ:', taskTextDiv.textContent);
+            if (editText !== null) {
+                taskTextDiv.textContent = editText;
+                editButton.textContent = 'Chỉnh sửa';
+            }
+        }
+
+        function deleteTask(taskItem) {
+            taskItem.remove();
+        }
+    </script>
+</body>
+</html>
